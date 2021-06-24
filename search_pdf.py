@@ -2,7 +2,6 @@ import pdfplumber
 import os
 import pandas as pd
 import tabula
-import numpy
 
 base_path = 'C:\\Users\Administrator\Desktop\论文'
 search = 'Appendix'

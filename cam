@@ -1,4 +1,5 @@
 fts_size = supp_feat.shape[-1]
+
 pros = sp_center.permute(1, 0)
 fts = supp_feat[0].permute(1, 2, 0).view(fts_size * fts_size, 256)
 save_img = support_image_path_list[0][0].split('/')[-1].split('.')[0]

@@ -1,0 +1,28 @@
+fts_size = supp_feat.shape[-1]
+pros = sp_center.permute(1, 0)
+fts = supp_feat[0].permute(1, 2, 0).view(fts_size * fts_size, 256)
+save_img = support_image_path_list[0][0].split('/')[-1].split('.')[0]
+for index, pro in enumerate(pros):
+	sim = F.cosine_similarity(pro.unsqueeze(0), fts, dim=1)
+	heatmap = sim.view(fts_size, fts_size)
+	heatmap = F.interpolate(heatmap.unsqueeze(0).unsqueeze(0), size=(800, 800), mode='bilinear')
+	heatmap = heatmap[0][0]
+	heatmap[heatmap < 0.7] = 0
+
+	hold = heatmap[heatmap != 0].flatten()
+
+	heatmap[heatmap != 0] = (heatmap[heatmap != 0] - torch.min(hold))/(torch.max(hold) - torch.min(hold))
+
+
+	#heatmap = heatmap / torch.max(heatmap.flatten())
+	heatmap = heatmap * 255
+	#heatmap = np.array(heatmap.detach().cpu(), dtype=np.uint8)
+	heatmap = np.array(heatmap.detach().cpu())
+	#cv2.imwrite(f'./heatmap/{save_img}_hm_{index}.jpg', heatmap)
+	#heatmap_g = cv2.imread(f'./heatmap/{save_img}_hm_{index}.jpg')
+	image = cv2.imread(support_image_path_list[0][0])
+	image = cv2.resize(image,(800,800))
+
+
+	save = self.heatmap_overlay(image, heatmap)
+	cv2.imwrite(f'./heatmap/{save_img}_{index}.jpg', save)

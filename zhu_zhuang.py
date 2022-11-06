@@ -12,7 +12,6 @@ total_width, n = 0.8, 4    # 有多少个类型，只需更改n即可，比如�
 width = total_width / n
 x = x - (total_width - width) / 2
 
-
 plt.bar(x, baseline, color = "#A1A9D0",width=width,label='Baseline')
 plt.bar(x + width, remove_align, color = "#F0988C",width=width,label='Remove Align')
 plt.bar(x + 2 * width, best , color = "#96CCCB",width=width,label='Meta-Align')

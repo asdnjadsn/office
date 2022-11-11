@@ -1,0 +1,19 @@
+import os
+from PIL import Image
+import numpy as np
+
+path = 'val2014'
+
+train_path = f'./annotations/{path}'
+val_path = f'./annotations/{path}'
+
+for f in os.listdir(train_path):
+    img = Image.open(os.path.join(train_path, f))
+    data = np.array(img)
+    cates = list(np.unique(data))
+    if 16 in cates:
+        file = f.split('.')[0]
+        move_img_cmd = f'cp ./{path}/{file}.jpg ./boat/img/'
+        move_label_cmd = f'cp ./annotations/{path}/{file}.png ./boat/annotations/'
+        os.system(move_img_cmd)
+        os.system(move_label_cmd)

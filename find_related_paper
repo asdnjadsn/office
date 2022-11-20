@@ -1,0 +1,8 @@
+with open('papers', encoding='utf-8') as f:
+    data = f.readlines()
+    # data = data[0::2]
+
+for i in data:
+    i = i.lower()
+    if 'domain' in i and 'few-shot' in i and 'cross' not in i:
+        print(i)
